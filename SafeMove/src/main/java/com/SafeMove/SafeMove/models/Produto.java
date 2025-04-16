@@ -13,15 +13,25 @@ public class Produto implements Serializable {
     private Long codigo;
 
     private Integer tombamento;
-
+    
+    @ManyToOne
     private Modelo modelo;
 
     private String descricao; 
-    
+
+    @ManyToOne
     private Colaborador pessoa;
 
-    // Construtor padrão
+    
     public Produto() {}
+    
+    public Colaborador getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Colaborador pessoa) {
+        this.pessoa = pessoa;
+    }
 
     // Getters e Setters
     public long getCodigo() {
