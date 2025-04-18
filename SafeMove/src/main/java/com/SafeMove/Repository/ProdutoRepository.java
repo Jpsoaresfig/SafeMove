@@ -7,7 +7,7 @@ import com.SafeMove.SafeMove.models.Produto;
 
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
-    Produto findByCodigoLong(Long codigo);
+    Produto findByCodigo(Long codigo);
     Produto findByTombamento(Integer tombamento);
 }
 	

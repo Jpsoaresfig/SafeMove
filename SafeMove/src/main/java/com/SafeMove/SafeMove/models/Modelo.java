@@ -1,11 +1,14 @@
 package com.SafeMove.SafeMove.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.io.Serializable;
-import jakarta.persistence.*;
 
 @Entity
 public class Modelo implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -13,10 +16,10 @@ public class Modelo implements Serializable {
     private Long codigo;
 
     private String nome;
-    private String marca; // Corrigido para seguir convenção de nomenclatura (camelCase)
-    private String tipo; // Ex: Computador, Impressora, Mouse
-    private String categoria; // Ex: Periférico, Hardware
-    private String especificacoes; // Pode armazenar detalhes técnicos
+    private String marca;
+    private String tipo;
+    private String categoria;
+    private String especificacoes;
     private int anoFabricacao;
     private boolean ativo;
 

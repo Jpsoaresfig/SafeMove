@@ -4,28 +4,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SafeMove.Repository.ProdutoRepository;
 import com.SafeMove.SafeMove.models.Produto;
 
 @Controller
+@RequestMapping("/cadastrarProduto")
 public class ProdutoController {
 
     private final ProdutoRepository pr;
-
+    
     public ProdutoController(ProdutoRepository pr) {
         this.pr = pr;
     }
+    
+    @GetMapping
+    public String form(Model model) {
+        model.addAttribute("produto", new Produto());
+        return "produto/formProduto";  
+    }}
 
-    @RequestMapping(value = "/cadastrarProduto", method = RequestMethod.GET)
-    public String form() {
-        return "produto/formProduto";
-    }
-
-    @RequestMapping(value = "/cadastrarProduto", method = RequestMethod.POST)
+    /*@PostMapping
     public String form(@Validated Produto produto, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Verifique os campos");
@@ -34,12 +35,12 @@ public class ProdutoController {
 
         pr.save(produto);
         attributes.addFlashAttribute("mensagem", "Produto cadastrado com sucesso!");
-        return "redirect:/listarProdutos";  // Redireciona para a listagem
+        return "redirect:/cadastrarProduto/listarProdutos";
     }
 
-    @RequestMapping(value = "/listarProdutos", method = RequestMethod.GET)
+    @GetMapping("/listarProdutos")
     public String listarProdutos(Model model) {
         model.addAttribute("produtos", pr.findAll());
-        return "produto/listarProdutos";  // Certifique-se de que esse template exista
+        return "produto/listarProdutos";
     }
-}
+}*/
