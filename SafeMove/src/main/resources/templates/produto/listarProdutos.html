@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos Cadastrados</h1>
+
+    <div th:if="${mensagem}" class="alert alert-success" role="alert">
+        <strong th:text="${mensagem}"></strong>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Tombamento</th>
+                <th>Descrição</th>
+                <th>Modelo</th>
+                <th>Colaborador</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.tombamento != null ? produto.tombamento : '-'}"></td>
+                <td th:text="${produto.descricao}"></td>
+                <td th:text="${produto.modelo != null ? produto.modelo : '-'}"></td>
+                <td th:text="${produto.pessoa != null ? produto.pessoa : '-'}"></td>
+                <td>
+                    <a th:href="@{/cadastrarProduto/editar/{tombamento}(tombamento=${produto.tombamento})}">Editar</a>
+                    <span style="margin: 0 5px;">|</span>
+                    <a th:href="@{/cadastrarProduto/excluir/{tombamento}(tombamento=${produto.tombamento})}"
+                       onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(listaDeProdutos)}">
+                <td colspan="5">Nenhum produto cadastrado ainda.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/cadastrarProduto">Cadastrar Novo Produto</a>
+</body>
+</html>
