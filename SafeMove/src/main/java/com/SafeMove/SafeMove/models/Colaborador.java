@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Colaborador implements Serializable {
@@ -24,7 +25,8 @@ public class Colaborador implements Serializable {
     @Column(unique = true) // garante que o lDap seja único
     private String lDap;
 
-    private Setor setor; // Certifique-se de que Setor seja uma classe JPA ou @Embeddable
+    @ManyToOne
+    private Destinos destino; // Renomeado para 'destino' e usando a classe 'Destino'
 
     // Construtores, Getters e Setters
 
@@ -62,11 +64,11 @@ public class Colaborador implements Serializable {
         this.lDap = lDap;
     }
 
-    public Setor getSetor() {
-        return setor;
+    public Destinos getDestino() {
+        return destino;
     }
 
-    public void setSetor(Setor setor) {
-        this.setor = setor;
+    public void setDestino(Destinos destinos) {
+        this.destino = destinos;
     }
 }

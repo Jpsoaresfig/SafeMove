@@ -1,7 +1,5 @@
 package com.SafeMove.SafeMove.models;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,45 +7,34 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Produto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
 
-    private Integer tombamento;  // Usar Integer se puder ser nulo
-    
-    @ManyToOne
-    private Modelo modelo;
-
-    private String descricao; 
+    private Integer tombamento;
+    private String descricao;
+    private String modelo;
+    private String pessoa;
 
     @ManyToOne
-    private Colaborador pessoa;
-
-    // Construtores, Getters e Setters
-    public Produto() {}
+    private Destinos destino; 
 
     public Long getCodigo() {
-        return codigo;  // Alterado para Long para consistência com o tipo do campo
+        return codigo;
     }
 
-    public Integer getTombamento() {  // Alterado para Integer para consistência com o tipo do campo
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public Integer getTombamento() {
         return tombamento;
     }
 
     public void setTombamento(Integer tombamento) {
         this.tombamento = tombamento;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
     }
 
     public String getDescricao() {
@@ -58,11 +45,39 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public Colaborador getPessoa() {
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getPessoa() {
         return pessoa;
     }
 
-    public void setPessoa(Colaborador pessoa) {
+    public void setPessoa(String pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public Destinos getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Destinos destino) {
+        this.destino = destino;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "codigo=" + codigo +
+                ", tombamento=" + tombamento +
+                ", descricao='" + descricao + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", pessoa='" + pessoa + '\'' +
+                ", destino=" + destino + // Alterado para exibir o objeto Destino
+                '}';
     }
 }

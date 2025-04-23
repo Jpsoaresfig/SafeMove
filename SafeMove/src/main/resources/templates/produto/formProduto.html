@@ -4,12 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        small {
+            display: block;
+            margin-top: 3px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        button,
+        .button,
+        a {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #1e7e34;
+        }
+
+        a {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
     <h1>Cadastro de Produto</h1>
     <form action="/cadastrarProduto" method="post" th:object="${produto}">
         <div>
-            <label for="tombamento">Tombamento (5 caracteres):</label>
+            <label for="tombamento">Tombamento:</label>
             <input type="number" id="tombamento" name="tombamento" th:field="*{tombamento}" minlength="5" maxlength="5" required>
             <small>Informe o número de tombamento com 5 caracteres.</small>
         </div>
@@ -21,8 +124,11 @@
 
         <div>
             <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" name="modelo" th:field="*{modelo}">
-            <small>Informe o nome ou identificador do modelo.</small>
+            <select id="modelo" name="modelo" th:field="*{modelo}">
+                <option value="">Selecione o Modelo</option>
+                <option th:each="modelo : ${listaModelos}" th:value="${modelo.codigo}" th:text="${modelo.nome}"></option>
+            </select>
+            <small>Selecione o modelo do produto.</small>
         </div>
 
         <div>
@@ -31,8 +137,22 @@
             <small>Informe o nome do colaborador responsável.</small>
         </div>
 
-        <button type="submit">Cadastrar Produto</button>
-        <a href="/cadastrarProduto/listarProdutos">Cancelar</a>
+        <div>
+            <label for="destino">Destino:</label>
+            <select id="destino" name="destino" th:field="*{destino}">
+                <option value="">Selecione o Destino</option>
+                <option th:each="destino : ${listaDestinos}" th:value="${destino.codigo}" th:text="${destino.agencia} - ${destino.setor}"></option>
+            </select>
+            <small>Selecione o destino do produto.</small>
+        </div>
+
+        <div>
+            <button type="submit">Cadastrar Produto</button>
+            <a href="/cadastrarProduto/listarProdutos">Cancelar</a>
+        </div>
     </form>
+
+    <br>
+    <a href="/cadastrarProduto/listarProdutos" class="button">Ver Lista de Produtos</a>
 </body>
-</html>	
+</html>
