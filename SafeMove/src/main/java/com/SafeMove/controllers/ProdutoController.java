@@ -1,7 +1,6 @@
 package com.SafeMove.controllers;
 
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SafeMove.Repository.DestinosRepository;
 import com.SafeMove.Repository.ProdutoRepository;
-import com.SafeMove.Repository.modeloRepository;
 import com.SafeMove.SafeMove.models.Destinos;
 import com.SafeMove.SafeMove.models.Produto;
 import com.SafeMove.enums.Agencias;
@@ -31,26 +29,26 @@ import com.SafeMove.enums.TipoProduto;
 public class ProdutoController {
 
     private final ProdutoRepository produtoRepository;
-    private final modeloRepository modeloRepository;
     private final DestinosRepository destinoRepository;
 
-    public ProdutoController(ProdutoRepository produtoRepository, modeloRepository modeloRepository, DestinosRepository destinoRepository) {
+    public ProdutoController(ProdutoRepository produtoRepository,DestinosRepository destinoRepository) {
         this.produtoRepository = produtoRepository;
-        this.modeloRepository = modeloRepository;
         this.destinoRepository = destinoRepository;
     }
 
     @GetMapping
     public String form(Model model) {
         model.addAttribute("produto", new Produto());
-        model.addAttribute("listaModelos", modeloRepository.findAll());
+        model.addAttribute("tiposProduto", TipoProduto.values());
         model.addAttribute("listaAgencias", Agencias.values());
         return "produto/formProduto";
     }
 
     @PostMapping
-    public String form(@Validated @ModelAttribute("produto") Produto produto, BindingResult result, RedirectAttributes attributes,
-                       @RequestParam("agencia") Agencias agenciaSelecionada){ 
+    public String form(@Validated @ModelAttribute("produto") Produto produto, BindingResult result,
+            @RequestParam("tipo") String tipoProdutoString, // Recebe o tipo como String
+            RedirectAttributes attributes,
+            @RequestParam("agencia") Agencias agenciaSelecionada){
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Verifique os campos");
@@ -59,9 +57,11 @@ public class ProdutoController {
 
         Destinos destino = new Destinos();
         destino.setAgencia(agenciaSelecionada);
-        destinoRepository.save(destino); 
+        destinoRepository.save(destino);
 
-        produto.setDestino(destino); 
+        TipoProduto tipoProduto = TipoProduto.valueOf(tipoProdutoString);  
+        produto.setTipo(tipoProduto);
+        produto.setDestino(destino);
 
         produtoRepository.save(produto);
         attributes.addFlashAttribute("mensagem", "Produto cadastrado com sucesso!");
@@ -101,4 +101,6 @@ public class ProdutoController {
         modelo.addAttribute("listaAgencias", Agencias.values());
         return "produto/formProduto";
     }
+    
+    
 }	

@@ -101,7 +101,7 @@
             <tr>
                 <th>Tombamento</th>
                 <th>Descrição</th>
-                <th>Modelo</th>
+                <th>Tipo</th>
                 <th>Colaborador</th>
                 <th>Destino</th>
                 <th>Ações</th>
@@ -111,7 +111,7 @@
             <tr th:each="produto : ${produtos}">
                 <td th:text="${produto.tombamento != null ? produto.tombamento : '-'}"></td>
                 <td th:text="${produto.descricao}"></td>
-                <td th:text="${produto.modelo != null ? produto.modelo : '-'}"></td>
+                <td th:text="${produto.tipo != null ? produto.tipo.descricao : '-'}"></td>
                 <td th:text="${produto.colaborador != null ? produto.colaborador.lDap : '-'}"></td>
                 <td th:text="${produto.destino != null ? produto.destino.agencia.descricao : '-'}"></td>
                 <td>

@@ -17,6 +17,19 @@ public class Produto implements Serializable {
     private String descricao;
     private Integer tombamento;
     private Colaborador colaborador;
+    private boolean ativo;
+    
+    public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+
+	@Enumerated(EnumType.STRING)
+    private TipoProduto tipo;
 
     public Colaborador getColaborador() {
 		return colaborador;
@@ -34,14 +47,10 @@ public class Produto implements Serializable {
 		this.tombamento = tombamento;
 	}
 
-	@ManyToOne
-    private Modelo modelo;
 
     @ManyToOne
     private Destinos destino;
 
-    @Enumerated(EnumType.STRING)
-    private TipoProduto tipo; 
 
     public Produto() {}
 
@@ -71,14 +80,7 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
-    }
-
+   
     public Destinos getDestino() {
         return destino;
     }
