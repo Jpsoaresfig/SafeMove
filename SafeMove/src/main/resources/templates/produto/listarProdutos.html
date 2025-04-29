@@ -103,6 +103,7 @@
                 <th>Descrição</th>
                 <th>Modelo</th>
                 <th>Colaborador</th>
+                <th>Destino</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -111,7 +112,8 @@
                 <td th:text="${produto.tombamento != null ? produto.tombamento : '-'}"></td>
                 <td th:text="${produto.descricao}"></td>
                 <td th:text="${produto.modelo != null ? produto.modelo : '-'}"></td>
-                <td th:text="${produto.pessoa != null ? produto.pessoa : '-'}"></td>
+                <td th:text="${produto.colaborador != null ? produto.colaborador.lDap : '-'}"></td>
+                <td th:text="${produto.destino != null ? produto.destino.agencia.descricao : '-'}"></td>
                 <td>
                     <a th:href="@{/cadastrarProduto/editar/{tombamento}(tombamento=${produto.tombamento})}">Editar</a>
                     <span style="margin: 0 5px;">|</span>
@@ -120,7 +122,7 @@
                 </td>
             </tr>
             <tr th:if="${#lists.isEmpty(produtos)}">
-                <td colspan="5">Nenhum produto cadastrado ainda.</td>
+                <td colspan="6">Nenhum produto cadastrado ainda.</td>
             </tr>
         </tbody>
     </table>

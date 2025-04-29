@@ -3,9 +3,13 @@ package com.SafeMove.SafeMove.models;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.SafeMove.enums.Agencias;
 
 @Entity
 public class Destinos implements Serializable {
@@ -14,10 +18,12 @@ public class Destinos implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long codigo;
+    private long idDestino;
 
-    private String agencia;
     private String setor; // caso precise especificar o setor
+    
+    @Enumerated(EnumType.STRING) // Armazena o nome da constante do enum no banco
+    private Agencias agencia;
 
 
     public Destinos() {
@@ -25,24 +31,24 @@ public class Destinos implements Serializable {
     }
 
     public Destinos(long codigo, String agencia, String setor) {
-        this.codigo = codigo;
-        this.agencia = agencia;
+        this.idDestino = codigo;
+        
         this.setor = setor;
     }
 
     public long getCodigo() {
-        return codigo;
+        return idDestino;
     }
 
     public void setCodigo(long codigo) {
-        this.codigo = codigo;
+        this.idDestino = codigo;
     }
 
-    public String getAgencia() {
+    public Agencias getAgencia() {
         return agencia;
     }
 
-    public void setAgencia(String agencia) {
+    public void setAgencia(Agencias agencia) {
         this.agencia = agencia;
     }
 

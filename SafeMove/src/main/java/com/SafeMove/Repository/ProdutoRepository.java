@@ -10,12 +10,10 @@ import com.SafeMove.SafeMove.models.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    Produto findByCodigo(Long codigo);
+	Produto findByIdProdtuo(Long idProdtuo);
     Produto findByTombamento(Integer tombamento);
 
     
-    @Query("SELECT p FROM Produto p WHERE p.pessoa IS NOT NULL AND p.pessoa <> ''")
-    List<Produto> findAllComPessoa();
 
     // Método padrão para buscar todos os produtos
     List<Produto> findAll();

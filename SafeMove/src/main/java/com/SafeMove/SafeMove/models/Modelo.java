@@ -1,7 +1,12 @@
 package com.SafeMove.SafeMove.models;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+
+import com.SafeMove.enums.TipoProduto;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.io.Serializable;
@@ -13,34 +18,26 @@ public class Modelo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long codigo;
+    private Long idModelo;
 
-    private String nome;
     private String marca;
-    private String tipo;
-    private String categoria;
     private String especificacoes;
-    private int anoFabricacao;
     private boolean ativo;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipo;
 
     public Modelo() {}
 
     // Getters e Setters
     public Long getCodigo() {
-        return codigo;
+        return idModelo;
     }
 
     public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+        this.idModelo = codigo;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public String getMarca() {
         return marca;
@@ -50,21 +47,6 @@ public class Modelo implements Serializable {
         this.marca = marca;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
 
     public String getEspecificacoes() {
         return especificacoes;
@@ -74,13 +56,6 @@ public class Modelo implements Serializable {
         this.especificacoes = especificacoes;
     }
 
-    public int getAnoFabricacao() {
-        return anoFabricacao;
-    }
-
-    public void setAnoFabricacao(int anoFabricacao) {
-        this.anoFabricacao = anoFabricacao;
-    }
 
     public boolean isAtivo() {
         return ativo;

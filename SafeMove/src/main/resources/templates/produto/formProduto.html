@@ -122,29 +122,31 @@
             <textarea id="descricao" name="descricao" th:field="*{descricao}" required></textarea>
         </div>
 
-        <div>
-            <label for="modelo">Modelo:</label>
-            <select id="modelo" name="modelo" th:field="*{modelo}">
-                <option value="">Selecione o Modelo</option>
-                <option th:each="modelo : ${listaModelos}" th:value="${modelo.codigo}" th:text="${modelo.nome}"></option>
-            </select>
-            <small>Selecione o modelo do produto.</small>
-        </div>
+		<div>
+		    <label for="tipo">Tipo:</label>
+		    <select id="tipo" name="tipo" th:field="*{tipo}">
+		        <option value="">Selecione o Tipo</option>
+		        <option th:each="tipoProduto : ${tiposProduto}"
+		                th:value="${tipoProduto}"
+		                th:text="${tipoProduto.descricao}"></option>
+		    </select>
+		</div>
 
-        <div>
-            <label for="pessoa">Colaborador Responsável:</label>
-            <input type="text" id="pessoa" name="pessoa" th:field="*{pessoa}">
-            <small>Informe o nome do colaborador responsável.</small>
-        </div>
+		<div>
+		    <label for="colaborador">Colaborador Responsável (LDAP/Email):</label>
+		    <input type="text" id="colaborador" name="colaborador" th:field="*{colaborador.lDap}" required />
+		    <small>Informe o LDAP do colaborador responsável.</small>
+		</div>
 
-        <div>
-            <label for="destino">Destino:</label>
-            <select id="destino" name="destino" th:field="*{destino}">
-                <option value="">Selecione o Destino</option>
-                <option th:each="destino : ${listaDestinos}" th:value="${destino.codigo}" th:text="${destino.agencia} - ${destino.setor}"></option>
-            </select>
-            <small>Selecione o destino do produto.</small>
-        </div>
+		<div>
+		    <label for="agencia">Destino:</label>
+			<select id="agencia" name="agencia">
+			    <option value="">Selecione o Destino</option>
+			    <option th:each="agenciaEnum : ${listaAgencias}"
+			            th:value="${agenciaEnum.name()}" th:text="${agenciaEnum.descricao}"></option>
+			</select>
+		    <small>Selecione o destino do produto.</small>
+		</div>
 
         <div>
             <button type="submit">Cadastrar Produto</button>

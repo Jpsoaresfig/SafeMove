@@ -1,41 +1,67 @@
 package com.SafeMove.SafeMove.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.SafeMove.enums.TipoProduto;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Produto {
+public class Produto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long idProdtuo;
 
-    private Integer tombamento;
+    private String nome;
     private String descricao;
-    private String modelo;
-    private String pessoa;
+    private Integer tombamento;
+    private Colaborador colaborador;
+
+    public Colaborador getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+	}
+
+	public Integer getTombamento() {
+		return tombamento;
+	}
+
+	public void setTombamento(Integer tombamento) {
+		this.tombamento = tombamento;
+	}
+
+	@ManyToOne
+    private Modelo modelo;
 
     @ManyToOne
-    private Destinos destino; 
+    private Destinos destino;
 
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipo; 
+
+    public Produto() {}
+
+    // Getters e Setters
     public Long getCodigo() {
-        return codigo;
+        return idProdtuo;
     }
 
     public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+        this.idProdtuo = codigo;
     }
 
-    public Integer getTombamento() {
-        return tombamento;
+    public String getNome() {
+        return nome;
     }
 
-    public void setTombamento(Integer tombamento) {
-        this.tombamento = tombamento;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
+
 
     public String getDescricao() {
         return descricao;
@@ -45,20 +71,12 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getModelo() {
+    public Modelo getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo) {
+    public void setModelo(Modelo modelo) {
         this.modelo = modelo;
-    }
-
-    public String getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(String pessoa) {
-        this.pessoa = pessoa;
     }
 
     public Destinos getDestino() {
@@ -69,15 +87,11 @@ public class Produto {
         this.destino = destino;
     }
 
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "codigo=" + codigo +
-                ", tombamento=" + tombamento +
-                ", descricao='" + descricao + '\'' +
-                ", modelo='" + modelo + '\'' +
-                ", pessoa='" + pessoa + '\'' +
-                ", destino=" + destino + // Alterado para exibir o objeto Destino
-                '}';
+    public TipoProduto getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoProduto tipo) {
+        this.tipo = tipo;
     }
 }

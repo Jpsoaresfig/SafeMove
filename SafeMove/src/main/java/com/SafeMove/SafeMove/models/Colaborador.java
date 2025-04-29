@@ -16,28 +16,27 @@ public class Colaborador implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+    private Long idColaborador;
 
     private String nome;
-
     private Long ramal;
 
     @Column(unique = true) // garante que o lDap seja único
     private String lDap;
 
     @ManyToOne
-    private Destinos destino; // Renomeado para 'destino' e usando a classe 'Destino'
+    private Destinos destino; 
 
     // Construtores, Getters e Setters
 
     public Colaborador() {}
 
     public Long getCodigo() {
-        return codigo;
+        return idColaborador;
     }
 
     public void setCodigo(Long codigo) {
-        this.codigo = codigo;
+        this.idColaborador = codigo;
     }
 
     public String getNome() {
