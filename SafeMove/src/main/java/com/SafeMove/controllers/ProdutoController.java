@@ -102,5 +102,30 @@ public class ProdutoController {
         return "produto/formProduto";
     }
     
+    @GetMapping("/excluir/{tombamento}")
+    public String excluirProduto(@PathVariable("tombamento") Integer tombamento, RedirectAttributes attributes) {
+        Produto produto = produtoRepository.findByTombamento(tombamento);
+        if (produto != null) {
+            produtoRepository.delete(produto);
+            attributes.addFlashAttribute("mensagem", "Produto com tombamento " + tombamento + " excluído com sucesso!");
+        } else {
+            attributes.addFlashAttribute("mensagem", "Produto com tombamento " + tombamento + " não encontrado!");
+        }
+        return "redirect:/cadastrarProduto/listarProdutos";
+    }
+
+    @GetMapping("/editar/{tombamento}")
+    public String editarProdutoForm(@PathVariable("tombamento") Integer tombamento, Model model) {
+        Produto produto = produtoRepository.findByTombamento(tombamento);
+        if (produto != null) {
+            model.addAttribute("produto", produto);
+            model.addAttribute("tiposProduto", TipoProduto.values());
+            model.addAttribute("listaAgencias", Agencias.values());
+            return "produto/formProduto"; 
+        } else {
+            return "redirect:/cadastrarProduto/listarProdutos"; 
+        }
+    }
+    
     
 }	
