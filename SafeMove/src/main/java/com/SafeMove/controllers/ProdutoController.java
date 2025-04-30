@@ -50,16 +50,23 @@ public class ProdutoController {
             RedirectAttributes attributes,
             @RequestParam("agencia") Agencias agenciaSelecionada){
 
+        
+        Produto produtoExistente = produtoRepository.findByTombamento(produto.getTombamento());
+
+        if (produtoExistente != null) {
+            result.rejectValue("tombamento", "error.produto", "Já existe um produto cadastrado com este tombamento.");
+        }
+
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Verifique os campos");
-            return "redirect:/cadastrarProduto";
+            return "produto/formProduto"; 
         }
 
         Destinos destino = new Destinos();
         destino.setAgencia(agenciaSelecionada);
         destinoRepository.save(destino);
 
-        TipoProduto tipoProduto = TipoProduto.valueOf(tipoProdutoString);  
+        TipoProduto tipoProduto = TipoProduto.valueOf(tipoProdutoString);
         produto.setTipo(tipoProduto);
         produto.setDestino(destino);
 
