@@ -1,5 +1,5 @@
 //classe de configuração
-package com.SafeMove.SafeMove;
+package com.SafeMove;
 
 import javax.sql.DataSource;
 

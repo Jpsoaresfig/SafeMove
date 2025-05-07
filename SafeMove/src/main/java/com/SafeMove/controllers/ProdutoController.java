@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SafeMove.Repository.DestinosRepository;
 import com.SafeMove.Repository.ProdutoRepository;
-import com.SafeMove.SafeMove.models.Destinos;
-import com.SafeMove.SafeMove.models.Produto;
+import com.SafeMove.models.Destinos;
+import com.SafeMove.models.Produto;
 import com.SafeMove.enums.Agencias;
 import com.SafeMove.enums.TipoProduto;
 

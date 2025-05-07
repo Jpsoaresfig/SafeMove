@@ -1,4 +1,4 @@
-package com.SafeMove.SafeMove.models;
+package com.SafeMove.models;
 
 import com.SafeMove.enums.TipoProduto;
 import javax.persistence.*;
