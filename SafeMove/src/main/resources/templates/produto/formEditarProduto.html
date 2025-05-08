@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Produto</title>
+    <style>
+        /* ... seus estilos (mantenha os estilos que você já tem) ... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            width: 50%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Adicionado para garantir que o padding não aumente a largura */
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Produto</h1>
+
+    <form th:action="@{/cadastrarProduto/editar}" th:object="${produto}" method="post">
+        <input type="hidden" th:field="*{idProduto}" />
+
+        <label for="tombamento">Tombamento:</label>
+        <input type="text" id="tombamento" th:field="*{tombamento}" readonly/><br/>
+
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" th:field="*{descricao}" required></textarea><br/>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" th:field="*{tipo}">
+            <option th:each="tipo : ${tiposProduto}" th:value="${tipo}" th:text="${tipo}"></option>
+        </select><br/>
+
+        <label for="colaborador">Colaborador Responsável (LDAP/Email):</label>
+        <input type="text" id="colaborador" th:field="*{colaborador.lDap}" required /><br/>
+
+        <div>
+            <label for="agencia">Agência:</label>
+            <select id="agencia" name="agencia" required>
+                <option value="">Selecione a Agência</option>
+                <option th:each="agenciaEnum : ${listaAgencias}"
+                        th:value="${agenciaEnum.name()}"
+                        th:text="${agenciaEnum.descricao}"
+                        th:selected="${agenciaEnum.name()} == ${produto.destino?.agencia?.name()}">
+                </option>
+            </select>
+            <small>Selecione a agência do produto.</small>
+        </div>
+        
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a th:href="@{/cadastrarProduto/listarProdutos}">Voltar</a>
+</body>
+</html>

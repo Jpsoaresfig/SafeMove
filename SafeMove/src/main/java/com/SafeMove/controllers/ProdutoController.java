@@ -20,8 +20,6 @@ import com.SafeMove.models.Produto;
 import com.SafeMove.enums.Agencias;
 import com.SafeMove.enums.TipoProduto;
 
-
-
 //verificar ferramenta do navegado pra saber o que ta de errado na requisição ;) 
 
 @Controller
@@ -31,7 +29,7 @@ public class ProdutoController {
     private final ProdutoRepository produtoRepository;
     private final DestinosRepository destinoRepository;
 
-    public ProdutoController(ProdutoRepository produtoRepository,DestinosRepository destinoRepository) {
+    public ProdutoController(ProdutoRepository produtoRepository, DestinosRepository destinoRepository) {
         this.produtoRepository = produtoRepository;
         this.destinoRepository = destinoRepository;
     }
@@ -48,9 +46,8 @@ public class ProdutoController {
     public String form(@Validated @ModelAttribute("produto") Produto produto, BindingResult result,
             @RequestParam("tipo") String tipoProdutoString, // Recebe o tipo como String
             RedirectAttributes attributes,
-            @RequestParam("agencia") Agencias agenciaSelecionada){
+            @RequestParam("agencia") Agencias agenciaSelecionada) {
 
-        
         Produto produtoExistente = produtoRepository.findByTombamento(produto.getTombamento());
 
         if (produtoExistente != null) {
@@ -59,7 +56,7 @@ public class ProdutoController {
 
         if (result.hasErrors()) {
             attributes.addFlashAttribute("mensagem", "Verifique os campos");
-            return "produto/formProduto"; 
+            return "produto/formProduto";
         }
 
         Destinos destino = new Destinos();
@@ -75,8 +72,7 @@ public class ProdutoController {
         return "redirect:/cadastrarProduto/listarProdutos";
     }
 
-    
-    //lista de produtos 
+    // lista de produtos
     @GetMapping("/listarProdutos")
     public String listarProdutos(Model model) {
         model.addAttribute("produtos", produtoRepository.findAll());
@@ -94,13 +90,12 @@ public class ProdutoController {
     @GetMapping("/{codigo}")
     public ModelAndView detalhesProduto(@PathVariable("codigo") Long codigo) {
         ModelAndView mv = new ModelAndView("produto/detalhesProduto");
-        Produto produto = produtoRepository.findByIdProdtuo(codigo);
+        Produto produto = produtoRepository.findByIdProduto(codigo);
         mv.addObject("produto", produto);
         return mv;
     }
 
-    
-    //formulário agencias e tipo produto 
+    // formulário agencias e tipo produto
     @GetMapping("/formulario-produto")
     public String mostrarFormularioEnum(Model modelo) {
         modelo.addAttribute("produto", new Produto());
@@ -108,7 +103,7 @@ public class ProdutoController {
         modelo.addAttribute("listaAgencias", Agencias.values());
         return "produto/formProduto";
     }
-    
+
     @GetMapping("/excluir/{tombamento}")
     public String excluirProduto(@PathVariable("tombamento") Integer tombamento, RedirectAttributes attributes) {
         Produto produto = produtoRepository.findByTombamento(tombamento);
@@ -121,18 +116,44 @@ public class ProdutoController {
         return "redirect:/cadastrarProduto/listarProdutos";
     }
 
-    @GetMapping("/editar/{tombamento}")
-    public String editarProdutoForm(@PathVariable("tombamento") Integer tombamento, Model model) {
-        Produto produto = produtoRepository.findByTombamento(tombamento);
-        if (produto != null) {
-            model.addAttribute("produto", produto);
-            model.addAttribute("tiposProduto", TipoProduto.values());
-            model.addAttribute("listaAgencias", Agencias.values());
-            return "produto/formProduto"; 
-        } else {
-            return "redirect:/cadastrarProduto/listarProdutos"; 
+    @PostMapping("/editar")
+    public String atualizarProduto(@ModelAttribute("produto") Produto produto,
+            @RequestParam("agencia") Agencias agenciaSelecionada,
+            RedirectAttributes attributes) {
+
+        Produto produtoExistente = produtoRepository.findByIdProduto(produto.getIdProduto());
+        if (produtoExistente == null) {
+            attributes.addFlashAttribute("mensagem", "Produto não encontrado!");
+            return "redirect:/cadastrarProduto/listarProdutos";
         }
+
+        produtoExistente.setDescricao(produto.getDescricao()); 
+        produtoExistente.setColaborador(produto.getColaborador()); 
+        produtoExistente.setTipo(produto.getTipo());
+
+        Destinos destino = produtoExistente.getDestino();
+        destino.setAgencia(agenciaSelecionada);
+        destinoRepository.save(destino);
+
+        produtoRepository.save(produtoExistente);
+
+        attributes.addFlashAttribute("mensagem", "Produto atualizado com sucesso!");
+        return "redirect:/cadastrarProduto/listarProdutos";
     }
-    
-    
-}	
+
+    @GetMapping("/editar/{tombamento}")
+    public String editarProduto(@PathVariable("tombamento") Integer tombamento, Model model,
+            RedirectAttributes attributes) {
+        Produto produto = produtoRepository.findByTombamento(tombamento);
+        if (produto == null) {
+            attributes.addFlashAttribute("mensagem", "Produto com tombamento " + tombamento + " não encontrado!");
+            return "redirect:/cadastrarProduto/listarProdutos";
+        }
+
+        model.addAttribute("produto", produto);
+        model.addAttribute("tiposProduto", TipoProduto.values());
+        model.addAttribute("listaAgencias", Agencias.values());
+        return "produto/formEditarProduto"; 
+    }
+
+}

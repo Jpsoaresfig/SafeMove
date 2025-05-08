@@ -114,7 +114,8 @@
     <form th:action="@{/cadastrarProduto}" method="post" th:object="${produto}">
 		<div>
 		    <label for="tombamento">Tombamento:</label>
-		    <input type="number" id="tombamento" th:field="*{tombamento}" minlength="5" maxlength="5" required>
+		    <input type="text" id="tombamento" th:field="*{tombamento}" maxlength="5" pattern="\d{5}" required>
+
 		    <small>Informe o número de tombamento com 5 caracteres.</small>
 		    <small class="text-danger" th:if="${#fields.hasErrors('tombamento')}" th:errors="*{tombamento}"></small>
 		</div>
@@ -160,4 +161,11 @@
     <br>
     <a href="/cadastrarProduto/listarProdutos" class="button">Ver Lista de Produtos</a>
 </body>
+<script>
+    const tombamentoInput = document.getElementById('tombamento');
+    tombamentoInput.addEventListener('input', () => {
+        tombamentoInput.value = tombamentoInput.value.replace(/\D/g, '').slice(0, 5);
+    });
+</script>
+
 </html>

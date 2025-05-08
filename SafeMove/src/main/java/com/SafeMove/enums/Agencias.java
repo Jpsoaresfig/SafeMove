@@ -1,7 +1,10 @@
 package com.SafeMove.enums;
 
-public enum Agencias {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
+public enum Agencias {
     SEDE("Sede"),
     UNIMED("Unimed"),
     UFPB("UFPB"),
@@ -39,7 +42,15 @@ public enum Agencias {
     JOQUEI("Jóquei"),
     TIMON("Timon");
 
-    private String descricao;
+    private final String descricao;
+
+    private static final Map<String, Agencias> DESCRICAO_MAP = new HashMap<>();
+
+    static {
+        for (Agencias agencia : values()) {
+            DESCRICAO_MAP.put(agencia.getDescricao().toLowerCase(), agencia);
+        }
+    }
 
     Agencias(String descricao) {
         this.descricao = descricao;
@@ -52,5 +63,17 @@ public enum Agencias {
     @Override
     public String toString() {
         return descricao;
+    }
+
+    public static Agencias fromDescricao(String descricao) {
+        Agencias agencia = DESCRICAO_MAP.get(descricao.toLowerCase());
+        if (agencia == null) {
+            throw new IllegalArgumentException("Descrição inválida: " + descricao);
+        }
+        return agencia;
+    }
+
+    public static Optional<Agencias> tryFromDescricao(String descricao) {
+        return Optional.ofNullable(DESCRICAO_MAP.get(descricao.toLowerCase()));
     }
 }

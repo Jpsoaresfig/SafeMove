@@ -11,56 +11,53 @@ public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idProdtuo;
+    private Long idProduto;
 
     private String nome;
     private String descricao;
     private Integer tombamento;
     private Colaborador colaborador;
     private boolean ativo;
-    
+
     public boolean isAtivo() {
-		return ativo;
-	}
+        return ativo;
+    }
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 
-
-	@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private TipoProduto tipo;
 
     public Colaborador getColaborador() {
-		return colaborador;
-	}
+        return colaborador;
+    }
 
-	public void setColaborador(Colaborador colaborador) {
-		this.colaborador = colaborador;
-	}
+    public void setColaborador(Colaborador colaborador) {
+        this.colaborador = colaborador;
+    }
 
-	public Integer getTombamento() {
-		return tombamento;
-	}
+    public Integer getTombamento() {
+        return tombamento;
+    }
 
-	public void setTombamento(Integer tombamento) {
-		this.tombamento = tombamento;
-	}
-
+    public void setTombamento(Integer tombamento) {
+        this.tombamento = tombamento;
+    }
 
     @ManyToOne
     private Destinos destino;
 
-
-    public Produto() {}
-
-    // Getters e Setters
-    public Long getCodigo() {
-        return idProdtuo;
+    public Produto() {
     }
 
-    public void setCodigo(Long codigo) {
-        this.idProdtuo = codigo;
+    public Long getIdProduto() {
+        return idProduto;
+    }
+
+    public void setIdProduto(Long idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {
@@ -71,7 +68,6 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
-
     public String getDescricao() {
         return descricao;
     }
@@ -80,7 +76,6 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-   
     public Destinos getDestino() {
         return destino;
     }
